@@ -8,7 +8,10 @@ const Button = ({ handleClick, text }) => (
 )
 
 const Statistic = ({ result, text }) => (
-    <p>{text} {result}</p>
+    <tr>
+        <td>{text}</td>
+        <td>{result}</td>
+    </tr>
 )
 
 const Statistics = ({ good, neutral, bad }) => {
@@ -25,12 +28,16 @@ const Statistics = ({ good, neutral, bad }) => {
 
     return (
         <div>
-            <Statistic text="Hyvä" result={good} />
-            <Statistic text="Neutraali" result={neutral} />
-            <Statistic text="Huono" result={bad} />
-            <Statistic text="Yhteensä" result={total} />
-            <Statistic text="Keskiarvo" result={average} />
-            <Statistic text="Positiivisia" result={`${(good / total) * 100}%`} />
+            <table>
+            <tbody>
+                <Statistic text="Hyvä" result={good} />
+                <Statistic text="Neutraali" result={neutral} />
+                <Statistic text="Huono" result={bad} />
+                <Statistic text="Yhteensä" result={total} />
+                <Statistic text="Keskiarvo" result={average} />
+                <Statistic text="Positiivisia" result={`${(good / total) * 100}%`} />
+                </tbody>
+            </table>
         </div>
     )
 
