@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddPerson = ({persons, setPersons, newName, newNumber, setNewName, setNewNumber}) => {
+const AddPerson = ({persons, setPersons, newName, newNumber, setNewName, setNewNumber, handleNameChange, handleNumberChange}) => {
 
     const addContact = (event) => {
         event.preventDefault()
@@ -16,14 +16,6 @@ const AddPerson = ({persons, setPersons, newName, newNumber, setNewName, setNewN
         }
         setNewName('')
         setNewNumber('')
-    }
-
-    const handleNameChange = (event) => {
-        setNewName(event.target.value)
-    }
-
-    const handleNumberChange = (event) => {
-        setNewNumber(event.target.value)
     }
 
     return (

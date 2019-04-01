@@ -1,10 +1,6 @@
 import React from 'react'
 
-const Filter = ({Filtered, setFiltered}) => {
-
-    const handleFilterChange = (event) => {
-        setFiltered(event.target.value)
-    }
+const Filter = ({Filtered, handleFilterChange}) => {
 
     return (
         <>
