@@ -4,10 +4,9 @@ import axios from 'axios'
 const Results = ({ setFiltered, countries }) => {
   const imageStyle = { width: '200px', heigth: '120px' }
 
-  const showInfo = (e) => {
-    console.log(e.target.dataset.key)
-    const countryname = e.target.dataset.key
-    setFiltered(countryname)
+  const showInfo = (name) => {
+    console.log(name)
+    setFiltered(name)
   }
 
   if (countries.length > 10) {
@@ -22,7 +21,7 @@ const Results = ({ setFiltered, countries }) => {
         {countries.map(country => {
           return (
             <div key={country["alpha3Code"]}>
-              <p>{country.name} <button data-key={country["name"]} onClick={showInfo}>show</button></p>
+              <p>{country.name} <button onClick={() => showInfo(country["name"])}>show</button></p>
             </div>
           )
         })}
