@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const Results = ({countries}) => {
-  const imageStyle = {width: '200px', heigth: '120px'}
+const Results = ({ setFiltered, countries }) => {
+  const imageStyle = { width: '200px', heigth: '120px' }
+
+  const showInfo = (e) => {
+    console.log(e.target.dataset.key)
+    const countryname = e.target.dataset.key
+    setFiltered(countryname)
+  }
+
   if (countries.length > 10) {
     return (
       <div>
@@ -12,7 +19,13 @@ const Results = ({countries}) => {
   } else if (countries.length < 10 && countries.length > 1) {
     return (
       <div>
-        {countries.map(country => <p key={country["alpha3Code"]}>{country.name}</p>)}
+        {countries.map(country => {
+          return (
+            <div key={country["alpha3Code"]}>
+              <p>{country.name} <button data-key={country["name"]} onClick={showInfo}>show</button></p>
+            </div>
+          )
+        })}
       </div>
     )
   } else if (countries.length === 1) {
@@ -24,7 +37,7 @@ const Results = ({countries}) => {
         <p>population: {country.population}</p>
         <h2>Languages</h2>
         {country.languages.map(lang => <p key={lang["iso639_2"]}>{lang.name}</p>)}
-        <img style={imageStyle} src={country.flag}></img>
+        <img style={imageStyle} src={country.flag}></img>
       </div>
     )
   }
@@ -60,7 +73,7 @@ const App = () => {
   return (
     <div>
       find countries <input onChange={handleFilterChange} value={Filtered} />
-      <Results countries={filtered} />
+      <Results countries={filtered} setFiltered={setFiltered} />
     </div>
   )
 }
