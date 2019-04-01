@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Filter = ({Filtered, handleFilterChange}) => {
+const Filter = ({ Filtered, handleFilterChange }) => {
 
     return (
         <>
-        rajaa näytettäviä <input onChange={handleFilterChange} value={Filtered} />
-    </>
+            rajaa näytettäviä <input onChange={handleFilterChange} value={Filtered} />
+        </>
     )
 }
 

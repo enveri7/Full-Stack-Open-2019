@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddPerson = ({persons, setPersons, newName, newNumber, setNewName, setNewNumber, handleNameChange, handleNumberChange}) => {
+const AddPerson = ({ persons, setPersons, newName, newNumber, setNewName, setNewNumber, handleNameChange, handleNumberChange }) => {
 
     const addContact = (event) => {
         event.preventDefault()
