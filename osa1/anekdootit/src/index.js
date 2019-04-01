@@ -21,7 +21,6 @@ const App = (props) => {
 
     const maxNum = Math.max(...votes)
     const index = votes.indexOf(maxNum)
-    console.log(index, selected[index])
 
     return (
         <div>
