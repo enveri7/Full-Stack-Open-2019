@@ -1,29 +1,24 @@
 {
-    "persons": [
-        {
-            "name": "Arto Hellas",
-            "number": "040-123456",
-            "id": 1
-        },
-        {
-            "name": "Martti Tienari",
-            "number": "040-123456",
-            "id": 2
-        },
-        {
-            "name": "Arto Järvinen",
-            "number": "040-123456",
-            "id": 3
-        },
-        {
-            "name": "Lea Kutvonen",
-            "number": "040-123456",
-            "id": 4
-        },
-        {
-            "name": "Seppo Kääriäinen",
-            "number": "040-123456",
-            "id": 4
-        }
-    ]
+  "persons": [
+    {
+      "name": "Seppo Kääriäinen",
+      "number": "040-123456",
+      "id": 4
+    },
+    {
+      "name": "Antti Rinne",
+      "number": "040-1313131",
+      "id": 5
+    },
+    {
+      "name": "Tarja Halonen",
+      "number": "050-33333",
+      "id": 6
+    },
+    {
+      "name": "sale",
+      "number": "050 224",
+      "id": 7
+    }
+  ]
 }

@@ -1,8 +1,25 @@
 import React from 'react'
+import personService from '../services/Persons'
 
-const Person = ({ name, number }) => <p>{name} {number}</p>
+const Person = ({ id, name, number, setPersons }) => {
+    const removePerson = (id, name) => {
 
-const Persons = ({ persons, Filtered }) => {
+        if (window.confirm(`Haluatko varmasti poistaa kohteen ${name}`)) {
+            personService.remove(id).then(() => {
+                personService.getAll()
+                    .then(data => {
+                        setPersons(data)
+                    })
+            })
+        }
+    }
+
+    return (
+        <p>{name} {number} <button onClick={() => { removePerson(id, name) }}>poista</button></p>
+    )
+}
+
+const Persons = ({ persons, Filtered, setPersons }) => {
 
     const filtered = persons.filter(person => {
         return person.name.toUpperCase().includes(Filtered.toUpperCase())
@@ -15,6 +32,8 @@ const Persons = ({ persons, Filtered }) => {
                     key={person.name}
                     name={person.name}
                     number={person.number}
+                    id={person.id}
+                    setPersons={setPersons}
                 />)}
         </>
     )
