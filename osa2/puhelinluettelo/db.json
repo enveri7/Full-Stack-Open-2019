@@ -6,19 +6,19 @@
       "id": 4
     },
     {
-      "name": "Antti Rinne",
-      "number": "040-1313131",
+      "name": "Seppo Taalas",
+      "number": "040-1337",
       "id": 5
     },
     {
-      "name": "Tarja Halonen",
-      "number": "050-33333",
-      "id": 6
+      "name": "Ahma Matti",
+      "number": "050-4567",
+      "id": 7
     },
     {
-      "name": "sale",
-      "number": "050 224",
-      "id": 7
+      "name": "Tarja Halonen",
+      "number": "044-022",
+      "id": 8
     }
   ]
 }

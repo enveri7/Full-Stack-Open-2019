@@ -1,11 +1,19 @@
 import React from 'react'
 import personService from '../services/Persons'
 
-const Person = ({ id, name, number, setPersons }) => {
+const Person = ({ id, name, number, setPersons, setMessage }) => {
     const removePerson = (id, name) => {
 
         if (window.confirm(`Haluatko varmasti poistaa kohteen ${name}`)) {
             personService.remove(id).then(() => {
+
+                setMessage(
+                    { message: `${name} poistettu.`, style: "success" }
+                )
+                setTimeout(() => {
+                    setMessage({ message: null })
+                }, 2000)
+
                 personService.getAll()
                     .then(data => {
                         setPersons(data)
@@ -19,7 +27,7 @@ const Person = ({ id, name, number, setPersons }) => {
     )
 }
 
-const Persons = ({ persons, Filtered, setPersons }) => {
+const Persons = ({ persons, setMessage, Filtered, setPersons }) => {
 
     const filtered = persons.filter(person => {
         return person.name.toUpperCase().includes(Filtered.toUpperCase())
@@ -34,6 +42,7 @@ const Persons = ({ persons, Filtered, setPersons }) => {
                     number={person.number}
                     id={person.id}
                     setPersons={setPersons}
+                    setMessage={setMessage}
                 />)}
         </>
     )
