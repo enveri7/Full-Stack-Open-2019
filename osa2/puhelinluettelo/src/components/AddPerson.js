@@ -39,14 +39,25 @@ const AddPerson = ({ persons, setPersons, newName, newNumber, setMessage, setNew
 
             }
         } else {
-            personService.create(contactObject).then(data => setPersons(persons.concat(data)))
+            personService.create(contactObject)
+                .then(data => setPersons(persons.concat(data)))
+                .then(() => {
+                    setMessage(
+                        { message: `${newName} lisätty onnistuneesti.`, style: "success" }
+                    )
+                    setTimeout(() => {
+                        setMessage({ message: null })
+                    }, 2000)
+                })
+                .catch(error => {
+                    setMessage(
+                        { message: error.response.data.error, style: "error" }
+                    )
+                    setTimeout(() => {
+                        setMessage({ message: null })
+                    }, 2000)
+                })
 
-            setMessage(
-                { message: `${newName} lisätty onnistuneesti.`, style: "success" }
-            )
-            setTimeout(() => {
-                setMessage({ message: null })
-            }, 2000)
         }
 
         setNewName('')
