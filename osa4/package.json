@@ -7,15 +7,17 @@
     "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "mongoose": "^5.4.22"
   },
   "devDependencies": {
+    "jest": "^24.7.1",
     "nodemon": "^1.18.10"
   },
   "scripts": {
     "start": "node index.js",
     "watch": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose"
   },
   "author": "Teemu Roivas",
   "license": "MIT"
