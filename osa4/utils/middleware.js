@@ -1,24 +1,26 @@
 const errorHandler = (error, request, response, next) => {
-
-    if (error.name === 'CastError' && error.kind == 'ObjectId') {
-        return response.status(400).send({ error: 'malformatted id' })
-    }
-
-    next(error)
-}
-
-const ValidationError = (error, request, response, next) => {
-    if (error.name === 'ValidationError') {
+    console.log("_________________________!!!!!!!!")
+    console.log(error)
+    if (error.name === 'CastError' && error.kind === 'ObjectId') {
+        return response.status(400).send({
+            error: 'malformatted id'
+        })
+    } else if (error.name === 'ValidationError') {
+        return response.status(400).json({
+            error: error.message
+        })
+    } else if (error.name === 'JsonWebTokenError') {
+        return response.status(401).json({
+            error: 'invalid token'
+        })
+    } else if (error.name === 'ValidationError') {
         return response.status(400).send({ error: error.message })
-    }
-    next(error)
-}
-
-const duplicateEntry = (error, request, response, next) => {
-
-    if (error.name === 'MongoError' && error.code == 11000) {
+    } 
+    // duplicate entry
+    else if (error.name === 'MongoError' && error.code == 11000) {
         return response.status(409).send({ error: error.message })
     }
+
     next(error)
 }
 
@@ -27,8 +29,6 @@ const unknownEndpoint = (request, response) => {
 }
 
 module.exports = {
-    ValidationError,
     unknownEndpoint,
-    duplicateEntry,
     errorHandler
 }
