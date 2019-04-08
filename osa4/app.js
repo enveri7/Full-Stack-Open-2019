@@ -22,5 +22,6 @@ app.use(bodyParser.json())
 app.use('/api/blogs', blogsRouter)
 
 app.use(middleware.ValidationError)
+app.use(middleware.unknownEndpoint)
 
 module.exports = app
