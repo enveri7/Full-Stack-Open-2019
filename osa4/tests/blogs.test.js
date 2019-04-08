@@ -29,7 +29,6 @@ test('all blogs are returned', async () => {
 
 test('blog id should be defined', async () => {
     const response = await api.get('/api/blogs')
-    console.log(response.body)
     response.body.forEach(blog => {
         expect(blog.id).toBeDefined()
     })
@@ -57,6 +56,42 @@ test('a valid blog can be added ', async () => {
     expect(contents).toContain(
         'A New Blog'
     )
+})
+
+test('blog with missing title or url will not be added', async () => {
+    const blogMissingTitle = {
+        author: 'Teemu Roivas',
+        url: 'http://localhost:3000/',
+        likes: 2
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(blogMissingTitle)
+        .expect(400)
+
+    const blogMissingUrl = {
+        title: "A New Blog",
+        author: 'Teemu Roivas',
+        likes: 2
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(blogMissingUrl)
+        .expect(400)
+
+})
+
+test('if likes are not given it is set to zero', async () => {
+    const newBlog = {
+        title: 'A New Blog',
+        author: 'Teemu Roivas',
+        url: 'http://localhost:3000/',
+    }
+
+    const blogObject = new Blog(newBlog)
+    expect(blogObject.likes).toBe(0)
 })
 
 afterAll(() => {
