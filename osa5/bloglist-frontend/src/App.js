@@ -15,6 +15,7 @@ const App = () => {
   const [newBlogTitle, setNewBlogTitle] = useState('')
   const [newBlogAuthor, setNewBlogAuthor] = useState('')
   const [newBlogUrl, setNewBlogUrl] = useState('')
+  const [createFormVisible, setCreateFormVisible] = useState(false)
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -42,7 +43,7 @@ const App = () => {
   }
 
   // two styles: 'error' and 'success'
-  const showMessage = (message, style="error") => {
+  const showMessage = (message, style = "error") => {
     setErrorMessage({ message, style })
     setTimeout(() => {
       setErrorMessage({ ...errorMessage, message: null })
@@ -103,19 +104,23 @@ const App = () => {
       <h2>blogs</h2>
       <p>{user ? `${user.username} logged in` : ""}</p>
       <button onClick={logOut}>logout</button>
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
+        <Blog blogs={blogs} setBlogs={setBlogs} key={blog.id} blog={blog} />
       )}
-      <AddBlog
-        newBlogAuthor={newBlogAuthor}
-        newBlogTitle={newBlogTitle}
-        newBlogUrl={newBlogUrl}
-        setNewBlogAuthor={setNewBlogAuthor}
-        setNewBlogTitle={setNewBlogTitle}
-        setNewBlogUrl={setNewBlogUrl}
-        showMessage={showMessage}
-        updateBlogList={updateBlogList}
-      />
+      {createFormVisible &&
+        <AddBlog
+          newBlogAuthor={newBlogAuthor}
+          newBlogTitle={newBlogTitle}
+          newBlogUrl={newBlogUrl}
+          setNewBlogAuthor={setNewBlogAuthor}
+          setNewBlogTitle={setNewBlogTitle}
+          setNewBlogUrl={setNewBlogUrl}
+          showMessage={showMessage}
+          updateBlogList={updateBlogList}
+        />
+      }
+      <br />
+      <button onClick={() => setCreateFormVisible(!createFormVisible)}>{createFormVisible ? 'hide' : 'show'}</button>
     </>
   )
 
