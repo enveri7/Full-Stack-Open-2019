@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blogs, setBlogs, blog }) => {
-  const { title, author, url, likes, user } = blog
+const Blog = ({ user, showMessage, updateBlogList, blogs, setBlogs, blog }) => {
+  const { title, author, url, likes } = blog
   const [fullDetails, setFullDetails] = useState(false)
 
   const blogStyle = {
@@ -20,17 +20,23 @@ const Blog = ({ blogs, setBlogs, blog }) => {
   const handleLikeClick = async () => {
     const newData = { ...blog }
     newData.likes += 1
-    newData.user = user.id
+    newData.user = blog.user.id
     const id = newData.id
     delete newData.id
     const data = await blogService.update(newData, id)
-    console.log(data)
     // map blogs and change one which got liked
     const newBlogs = [...blogs].map(blog => blog.id === data.id ? data : blog)
-    console.log(newBlogs, data)
     setBlogs(newBlogs)
   }
-  console.log(blog)
+
+  const handleRemove = async () => {
+    if (window.confirm(`Haluatko varmasti poistaa kohteen: ${blog.title}, ${blog.author}`)) {
+      await blogService.remove(blog.id)
+      showMessage(`kohde ${blog.title}, ${blog.author} poistettu.`)
+      updateBlogList()
+    }
+  }
+
   const showDetails = () => {
     if (fullDetails) {
       return (
@@ -40,7 +46,9 @@ const Blog = ({ blogs, setBlogs, blog }) => {
           </div>
           <p><a href={url}>{url}</a></p>
           <p>{likes} likes <button onClick={handleLikeClick}>like</button></p>
-          <p>Added by {user.name}</p>
+          <p>Added by {blog.user.name}</p>
+
+          {(user.username === blog.user.username) && <button onClick={handleRemove}>remove</button>}
         </div>
       )
     }

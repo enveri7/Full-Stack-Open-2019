@@ -15,6 +15,9 @@ const AddBlog = ({ updateBlogList, showMessage, newBlogAuthor, newBlogTitle, new
                 newBlogObject
             )
             updateBlogList()
+            setNewBlogTitle('')
+            setNewBlogAuthor('')
+            setNewBlogUrl('')
             showMessage(`uusi blogi ${newBlogTitle} luotu`, 'success')
         } catch (exception) {
             showMessage('blogia ei voitu luoda')

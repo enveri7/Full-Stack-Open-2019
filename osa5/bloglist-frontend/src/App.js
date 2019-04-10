@@ -105,7 +105,14 @@ const App = () => {
       <p>{user ? `${user.username} logged in` : ""}</p>
       <button onClick={logOut}>logout</button>
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog blogs={blogs} setBlogs={setBlogs} key={blog.id} blog={blog} />
+        <Blog blogs={blogs}
+          setBlogs={setBlogs}
+          key={blog.id}
+          blog={blog}
+          updateBlogList={updateBlogList}
+          showMessage={showMessage} 
+          user={user}
+        />
       )}
       {createFormVisible &&
         <AddBlog
