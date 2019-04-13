@@ -1,7 +1,7 @@
 import React from 'react'
 import blogService from '../services/blogs'
 
-const AddBlog = ({ updateBlogList, showMessage, newBlogAuthor, newBlogTitle, newBlogUrl, setNewBlogAuthor, setNewBlogTitle, setNewBlogUrl }) => {
+const AddBlog = ({ getBlogList, showMessage, newBlogAuthor, newBlogTitle, newBlogUrl, setNewBlogAuthor, setNewBlogTitle, setNewBlogUrl }) => {
 
     const handleCreate = async (e) => {
         e.preventDefault()
@@ -14,7 +14,7 @@ const AddBlog = ({ updateBlogList, showMessage, newBlogAuthor, newBlogTitle, new
             await blogService.create(
                 newBlogObject
             )
-            updateBlogList()
+            getBlogList()
             setNewBlogTitle('')
             setNewBlogAuthor('')
             setNewBlogUrl('')

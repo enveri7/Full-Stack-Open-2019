@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import blogService from '../services/blogs'
 
-const Blog = ({ user, showMessage, updateBlogList, blogs, setBlogs, blog }) => {
+const Blog = ({ updateBlog, user, showMessage, getBlogList, blog }) => {
   const { title, author, url, likes } = blog
   const [fullDetails, setFullDetails] = useState(false)
 
@@ -18,23 +18,18 @@ const Blog = ({ user, showMessage, updateBlogList, blogs, setBlogs, blog }) => {
     setFullDetails(!fullDetails)
   }
 
-  const handleLikeClick = async () => {
-    const newData = { ...blog }
-    newData.likes += 1
-    newData.user = blog.user.id
-    const id = newData.id
-    delete newData.id
-    const data = await blogService.update(newData, id)
-    // map blogs and change one which got liked
-    const newBlogs = [...blogs].map(blog => blog.id === data.id ? data : blog)
-    setBlogs(newBlogs)
+  const handleLikeClick = () => {
+    const newObject = { ...blog }
+    newObject.likes += 1
+    newObject.user = blog.user.id
+    updateBlog(newObject, newObject.id)
   }
 
   const handleRemove = async () => {
     if (window.confirm(`Haluatko varmasti poistaa kohteen: ${blog.title}, ${blog.author}`)) {
       await blogService.remove(blog.id)
       showMessage(`kohde ${blog.title}, ${blog.author} poistettu.`)
-      updateBlogList()
+      getBlogList()
     }
   }
 
@@ -70,12 +65,11 @@ const Blog = ({ user, showMessage, updateBlogList, blogs, setBlogs, blog }) => {
 }
 
 Blog.propTypes = {
-  user: PropTypes.object.isRequired,
+  user: PropTypes.object,
   showMessage: PropTypes.func.isRequired,
-  updateBlogList: PropTypes.func.isRequired,
-  blogs: PropTypes.array.isRequired,
+  getBlogList: PropTypes.func.isRequired,
+  updateBlog: PropTypes.func.isRequired,
   blog: PropTypes.object.isRequired,
-  setBlogs: PropTypes.func.isRequired
 }
 
 export default Blog

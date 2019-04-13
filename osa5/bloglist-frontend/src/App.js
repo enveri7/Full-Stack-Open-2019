@@ -36,7 +36,14 @@ const App = () => {
     }
   }
 
-  const updateBlogList = () => {
+  const updateBlog = async (newObject, id) => {
+    const data = await blogService.update(newObject, id)
+    // map blogs and change one which got liked
+    const newBlogs = [...blogs].map(blog => blog.id === data.id ? data : blog)
+    setBlogs(newBlogs)
+  }
+
+  const getBlogList = () => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
     )
@@ -51,7 +58,7 @@ const App = () => {
   }
 
   useEffect(() => {
-    updateBlogList()
+    getBlogList()
   }, [])
 
   useEffect(() => {
@@ -105,11 +112,11 @@ const App = () => {
       <p>{user ? `${user.username} logged in` : ""}</p>
       <button onClick={logOut}>logout</button>
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
-        <Blog blogs={blogs}
-          setBlogs={setBlogs}
+        <Blog
           key={blog.id}
+          updateBlog={updateBlog}
           blog={blog}
-          updateBlogList={updateBlogList}
+          getBlogList={getBlogList}
           showMessage={showMessage} 
           user={user}
         />
@@ -123,7 +130,7 @@ const App = () => {
           setNewBlogTitle={setNewBlogTitle}
           setNewBlogUrl={setNewBlogUrl}
           showMessage={showMessage}
-          updateBlogList={updateBlogList}
+          getBlogList={getBlogList}
         />
       }
       <br />
