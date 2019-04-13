@@ -16,7 +16,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react", "jest"
+        "react", "jest", "react-hooks"
     ],
     "rules": {
         "indent": [
@@ -36,6 +36,8 @@ module.exports = {
             "never"
         ],
         "eqeqeq": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
         "no-trailing-spaces": "error",
         "object-curly-spacing": [
             "error", "always"
