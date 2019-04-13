@@ -12,9 +12,6 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState({ message: null, style: "error" })
   const [user, setUser] = useState(null)
-  const [newBlogTitle, setNewBlogTitle] = useState('')
-  const [newBlogAuthor, setNewBlogAuthor] = useState('')
-  const [newBlogUrl, setNewBlogUrl] = useState('')
   const [createFormVisible, setCreateFormVisible] = useState(false)
 
   const handleLogin = async (event) => {
@@ -40,6 +37,11 @@ const App = () => {
     const data = await blogService.update(newObject, id)
     // map blogs and change one which got liked
     const newBlogs = [...blogs].map(blog => blog.id === data.id ? data : blog)
+    setBlogs(newBlogs)
+  }
+
+  const addBlog = async (newObject) => {
+    const newBlogs = [...blogs, newObject]
     setBlogs(newBlogs)
   }
 
@@ -117,20 +119,14 @@ const App = () => {
           updateBlog={updateBlog}
           blog={blog}
           getBlogList={getBlogList}
-          showMessage={showMessage} 
+          showMessage={showMessage}
           user={user}
         />
       )}
       {createFormVisible &&
         <AddBlog
-          newBlogAuthor={newBlogAuthor}
-          newBlogTitle={newBlogTitle}
-          newBlogUrl={newBlogUrl}
-          setNewBlogAuthor={setNewBlogAuthor}
-          setNewBlogTitle={setNewBlogTitle}
-          setNewBlogUrl={setNewBlogUrl}
           showMessage={showMessage}
-          getBlogList={getBlogList}
+          addBlog={addBlog}
         />
       }
       <br />

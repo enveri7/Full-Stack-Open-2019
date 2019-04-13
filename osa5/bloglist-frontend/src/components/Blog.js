@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import blogService from '../services/blogs'
 
 const Blog = ({ updateBlog, user, showMessage, getBlogList, blog }) => {
-  const { title, author, url, likes } = blog
   const [fullDetails, setFullDetails] = useState(false)
+  const { title, author, url, likes } = blog
 
   const blogStyle = {
     paddingTop: 10,
