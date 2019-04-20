@@ -15,7 +15,7 @@ const removeNotification = (id) => {
 }
 
 let nextNotificationId = 0
-export function showNotificationWithTimeout(dispatch, text) {
+export const showNotificationWithTimeout = (dispatch, text) => {
     // The notifications have IDs to avoid
     // race condition if you show two notifications fast enough. 
     // When the first timeout finishes, it will dispatch REMOVE, 
@@ -38,11 +38,9 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SHOW':
             const newState = [...state, action.data]
-            console.log(newState)
             return newState
         case 'REMOVE':
             const stateCopy = [...state]
-            console.log(stateCopy)
             return stateCopy.filter(item => item.id !== action.data.id)
         default: return state
     }

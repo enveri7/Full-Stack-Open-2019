@@ -4,6 +4,7 @@ const Notification = ({ notifications }) => {
   const style = {
     border: 'solid',
     padding: 10,
+    marginBottom: 10,
     borderWidth: 1
   }
 
