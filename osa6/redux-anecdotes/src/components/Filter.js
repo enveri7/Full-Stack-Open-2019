@@ -6,7 +6,6 @@ const Filter = (props) => {
 
     const handleChange = (event) => {
         // input-kentän arvo muuttujassa event.target.value
-        console.log(event.target.value)
         props.filterAnecdotes(event.target.value)
     }
     const style = {

@@ -15,7 +15,6 @@ export const increaseVotes = (anecdote) => {
   return async dispatch => {
     anecdote.votes += 1
     const updatedAnecdote = await anecdotesService.update(anecdote)
-    console.log(updatedAnecdote)
     dispatch({
       type: 'VOTE',
       data: updatedAnecdote
@@ -38,8 +37,6 @@ const initialState = []
 // reducer
 
 const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
 
   switch (action.type) {
     case 'VOTE':

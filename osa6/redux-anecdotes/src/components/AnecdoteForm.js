@@ -1,8 +1,7 @@
 import React from 'react';
 import { createAnecdote } from '../reducers/anecdoteReducer'
-import { showNotification, removeNotification } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
-import anecdotesService from '../services/anecdotes'
 
 const AnecdoteForm = (props) => {
 
@@ -12,10 +11,7 @@ const AnecdoteForm = (props) => {
         props.createAnecdote(content)
 
         const notificationID = Date.now()
-        props.showNotification(`You voted '${content}'.`, notificationID)
-        setTimeout(() => {
-            props.removeNotification(notificationID)
-        }, 5000)
+        props.setNotification(`You voted '${content}'.`, notificationID, 5)
     }
 
     return (
@@ -30,8 +26,7 @@ const AnecdoteForm = (props) => {
 
 const mapDispatchToProps = {
     createAnecdote,
-    showNotification,
-    removeNotification
+    setNotification
 }
 
 export default connect(null, mapDispatchToProps)(AnecdoteForm)

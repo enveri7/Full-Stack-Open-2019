@@ -12,7 +12,6 @@ const initialState = ""
 // reducer
 
 const reducer = (state = initialState, action) => {
-    console.log(action, state)
     switch (action.type) {
         case 'SET_FILTER':
             return action.data

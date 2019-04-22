@@ -1,6 +1,6 @@
 import React from 'react';
 import { increaseVotes } from '../reducers/anecdoteReducer'
-import { showNotification, removeNotification } from '../reducers/notificationReducer'
+import { setNotification } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 
 const AnecdoteList = (props) => {
@@ -10,10 +10,7 @@ const AnecdoteList = (props) => {
         props.increaseVotes(anecdote)
 
         const notificationID = Date.now()
-        props.showNotification(`You voted '${content}'.`, notificationID)
-        setTimeout(() => {
-            props.removeNotification(notificationID)
-        }, 5000)
+        props.setNotification(`You voted '${content}'.`, notificationID, 5)
     }
 
     const filtered = props.anecdotes.filter(anecdote => anecdote.content.toUpperCase().includes(props.filter.toUpperCase()))
@@ -43,8 +40,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     increaseVotes,
-    showNotification,
-    removeNotification
+    setNotification
 }
 
 const ConnectedAnecdotes = connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)

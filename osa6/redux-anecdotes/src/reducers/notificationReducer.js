@@ -1,16 +1,25 @@
 // action creators
 
-export const showNotification = (content, id) => {
+const showNotification = (content, id) => {
     return {
         type: 'SHOW',
         data: { content, id }
     }
 }
 
-export const removeNotification = (id) => {
+const removeNotification = (id) => {
     return {
         type: 'REMOVE',
         data: { content: null, id }
+    }
+}
+
+export const setNotification = (content, id, time) => {
+    return async dispatch => {
+        dispatch(showNotification(content, id))
+        setTimeout(() => {
+            dispatch(removeNotification(id))
+        }, time*1000)
     }
 }
 
