@@ -6,8 +6,8 @@ import { connect } from 'react-redux'
 const AnecdoteList = (props) => {
 
     const vote = (anecdote) => {
-        const { id, content } = anecdote
-        props.increaseVotes(id)
+        const { content } = anecdote
+        props.increaseVotes(anecdote)
 
         const notificationID = Date.now()
         props.showNotification(`You voted '${content}'.`, notificationID)
