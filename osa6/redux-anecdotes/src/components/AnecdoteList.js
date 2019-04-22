@@ -1,15 +1,22 @@
 import React from 'react';
 import { increaseVotes } from '../reducers/anecdoteReducer'
-import { showNotificationWithTimeout } from '../reducers/notificationReducer'
+import { showNotification, removeNotification } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 
-const AnecdoteList = ({ anecdotes, store }) => {
+const AnecdoteList = (props) => {
+
     const vote = (anecdote) => {
         const { id, content } = anecdote
-        store.dispatch(increaseVotes(id))
-        showNotificationWithTimeout(store.dispatch, `You voted '${content}'.`)
+        props.increaseVotes(id)
+
+        const notificationID = Date.now()
+        props.showNotification(`You voted '${content}'.`, notificationID)
+        setTimeout(() => {
+            props.removeNotification(notificationID)
+        }, 5000)
     }
-    const filter = store.getState().filter
-    const filtered = anecdotes.filter(anecdote => anecdote.content.toUpperCase().includes(filter.toUpperCase()))
+
+    const filtered = props.anecdotes.filter(anecdote => anecdote.content.toUpperCase().includes(props.filter.toUpperCase()))
 
     return (
         <div>
@@ -19,8 +26,7 @@ const AnecdoteList = ({ anecdotes, store }) => {
                         {anecdote.content}
                     </div>
                     <div>
-                        has {anecdote.votes}
-                        <button onClick={() => vote(anecdote)}>vote</button>
+                        has {anecdote.votes} votes <button onClick={() => vote(anecdote)}>vote</button>
                     </div>
                 </div>
             )}
@@ -28,4 +34,18 @@ const AnecdoteList = ({ anecdotes, store }) => {
     )
 }
 
-export default AnecdoteList
+const mapStateToProps = (state) => {
+    return {
+        anecdotes: state.anecdotes,
+        filter: state.filter
+    }
+}
+
+const mapDispatchToProps = {
+    increaseVotes,
+    showNotification,
+    removeNotification
+}
+
+const ConnectedAnecdotes = connect(mapStateToProps, mapDispatchToProps)(AnecdoteList)
+export default ConnectedAnecdotes

@@ -1,26 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import {connect} from 'react-redux'
 import AnecdoteForm from './components/AnecdoteForm';
 import AnecdoteList from './components/AnecdoteList';
 import Notification from './components/Notification';
 import Filter from './components/Filter';
-
+import anecdotesService from './services/anecdotes'
+import {initializeAnecdotes} from './reducers/anecdoteReducer'
 
 const App = (props) => {
-  console.log(props.store.getState())
-  const anecdotes = props.store.getState().anecdotes
-  const notifications = props.store.getState().notifications
-  const store = props.store
+
+  useEffect(() => {
+    anecdotesService.getAll()
+    .then(data => {
+      props.initializeAnecdotes(data)
+    })
+  }, []);
   
   return (
     <div>
-      {(notifications.length > 0) && <Notification notifications={notifications}/>}
-      <Filter store={store}/>
+      <Notification />
+      <Filter />
       <h2>Anecdotes</h2>
-      <AnecdoteList store={store} anecdotes={anecdotes}/>
+      <AnecdoteList />
       <h2>create new</h2>
-      <AnecdoteForm store={store}/>
+      <AnecdoteForm />
     </div>
   )
 }
 
-export default App
+export default connect(null, { initializeAnecdotes })(App)

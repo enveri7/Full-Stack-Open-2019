@@ -1,12 +1,13 @@
 import React from 'react'
 import { filterAnecdotes } from '../reducers/filterReducer'
+import { connect } from 'react-redux'
 
 const Filter = (props) => {
-    const store = props.store
+
     const handleChange = (event) => {
         // input-kentän arvo muuttujassa event.target.value
         console.log(event.target.value)
-        store.dispatch(filterAnecdotes(event.target.value))
+        props.filterAnecdotes(event.target.value)
     }
     const style = {
         marginBottom: 10
@@ -19,4 +20,8 @@ const Filter = (props) => {
     )
 }
 
-export default Filter
+const mapDispatchToProps = {
+    filterAnecdotes
+}
+
+export default connect(null, mapDispatchToProps)(Filter)

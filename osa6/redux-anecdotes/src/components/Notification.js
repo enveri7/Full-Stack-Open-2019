@@ -1,6 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
-const Notification = ({ notifications }) => {
+const Notification = (props) => {
   const style = {
     border: 'solid',
     padding: 10,
@@ -8,19 +9,32 @@ const Notification = ({ notifications }) => {
     borderWidth: 1
   }
 
-  const renderNotification = (notifications) => {
-    // render the newest notification
-    const max = notifications.reduce((prev, current) => {
-      return (prev.id > current.id) ? prev : current
-    })
-    return max.content
+  if (props.notifications.length === 0) {
+    return (
+      <div>
+      </div>
+    )
   }
 
   return (
     <div style={style}>
-      {renderNotification(notifications)}
+      {renderNotification(props.notifications)}
     </div>
   )
 }
 
-export default Notification
+const renderNotification = (notifications) => {
+  // render the newest notification
+  const max = notifications.reduce((prev, current) => {
+    return (prev.id > current.id) ? prev : current
+  })
+  return max.content
+}
+
+const mapStateToProps = (state) => {
+  return {
+    notifications: state.notifications
+  }
+}
+
+export default connect(mapStateToProps, null)(Notification)

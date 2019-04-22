@@ -1,32 +1,17 @@
 // action creators
 
-const showNotification = (id, content) => {
+export const showNotification = (content, id) => {
     return {
         type: 'SHOW',
         data: { content, id }
     }
 }
 
-const removeNotification = (id) => {
+export const removeNotification = (id) => {
     return {
         type: 'REMOVE',
         data: { content: null, id }
     }
-}
-
-let nextNotificationId = 0
-export const showNotificationWithTimeout = (dispatch, text) => {
-    // The notifications have IDs to avoid
-    // race condition if you show two notifications fast enough. 
-    // When the first timeout finishes, it will dispatch REMOVE, 
-    // erroneously hiding the second notification sooner than after the timeout.
-
-    const id = nextNotificationId++
-    dispatch(showNotification(id, text))
-
-    setTimeout(() => {
-        dispatch(removeNotification(id))
-    }, 5000)
 }
 
 const initialState = []
