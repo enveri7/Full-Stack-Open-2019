@@ -50,6 +50,18 @@ const Footer = () => (
   </div>
 )
 
+const Notification = ({notification}) => {
+  const divStyle = {
+    border: '2px solid red',
+    paddingLeft: 10
+  }
+  return (
+    <div style={divStyle}>
+      <p>{notification}</p>
+    </div>
+  )
+}
+
 const CreateNew = (props) => {
   console.log(props)
   const [content, setContent] = useState('')
@@ -65,6 +77,7 @@ const CreateNew = (props) => {
       votes: 0
     })
     props.history.push('/')
+    props.showNotification(`Anecdote '${content}' created.`)
   }
 
   return (
@@ -116,6 +129,13 @@ const App = () => {
 
   const [notification, setNotification] = useState('')
 
+  const showNotification = (message, time=10) => {
+    setNotification(message)
+    setTimeout(() => {
+      setNotification("")
+    }, time*1000)
+  }
+
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
@@ -135,9 +155,9 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
   
-
   return (
     <div>
+      {notification && <Notification notification={notification} />}
       <h1>Software anecdotes</h1>
       <Router>
         <div>
@@ -147,7 +167,7 @@ const App = () => {
             <Link style={padding} to="/about">about</Link>
           </div>
           <Route exact path="/" render={() => <AnecdoteList anecdotes={anecdotes} />} />
-          <Route exact path="/create" render={() => <CreateNewWithRouter addNew={addNew} />} />
+          <Route exact path="/create" render={() => <CreateNewWithRouter showNotification={showNotification} addNew={addNew} />} />
           <Route exact path="/about" render={() => <About />} />
           <Route exact path="/anecdotes/:id" render={({ match }) =>
             <Anecdote anecdote={anecdoteById(match.params.id)} />
