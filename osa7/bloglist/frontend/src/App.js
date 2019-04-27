@@ -6,11 +6,16 @@ import loginService from './services/login'
 import AddBlog from './components/AddBlog'
 import Login from './components/Login'
 import Users from './components/Users'
+import User from './components/User'
+import {
+  BrowserRouter as Router,
+  Route, Link, Redirect, withRouter
+} from 'react-router-dom'
 
 import Notification from './components/Notification'
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
-import {setUser} from './reducers/loggedUserReducer'
+import { setUser } from './reducers/loggedUserReducer'
 
 const App = (props) => {
 
@@ -93,12 +98,12 @@ const App = (props) => {
   //   }
   // }, [])
 
-  // const logOut = () => {
-  //   window.localStorage.removeItem(
-  //     'loggedBlogUser'
-  //   )
-  //   setUser(null)
-  // }
+  const logOut = () => {
+    window.localStorage.removeItem(
+      'loggedBlogUser'
+    )
+    props.setUser(null)
+  }
 
   //   const loginForm = (
   //     <>
@@ -163,18 +168,31 @@ const App = (props) => {
   //     </div>
   //   )
 
+  const userById = (id) => {
+    console.log(props.users, id)
+    return props.users.find(user => user.id === (id))
+  }
+
   if (!props.loggedUser) {
     return (
       <Login />
     )
   }
-
+    
+  console.log(userById("5cadf1f116150853a6399ddf"))
   return (
     <div>
+      <Router>
+        <Route exact path="/users" render={() => <Users />} />
+        <Route exact path="/users/:id" render={({ match }) =>
+          <User user={userById(match.params.id)} />
+        } />
+      </Router>
       <Notification />
+      <p>{props.loggedUser.username} logged in</p>
+      <button onClick={logOut}>logout</button>
       <AddBlog />
       <BlogList />
-      <Users />
     </div>
   )
 }
@@ -182,7 +200,8 @@ const App = (props) => {
 // tän voi korvata ehkä routerilla
 const mapStateToProps = (state) => {
   return {
-    loggedUser: state.loggedUser
+    loggedUser: state.loggedUser,
+    users: state.users
   }
 }
 
