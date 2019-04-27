@@ -13,7 +13,6 @@ const getAll = () => {
 }
 
 const create = async newObject => {
-  // token = "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlbWUiLCJpZCI6IjVjYWIxZGVhZTQwOTY3MjY2ZTlkYjA5NCIsImlhdCI6MTU1NjM2OTA5Nn0.NcmTYK7ulHsOoTwJHRZyclwoX7jKdyFafdjJCfZzAdc"
   const config = {
     headers: { Authorization: token}
   }

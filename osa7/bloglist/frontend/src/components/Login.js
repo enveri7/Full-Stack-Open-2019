@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { showNotification } from '../reducers/notificationReducer'
-import { setUser } from '../reducers/userReducer'
+import { setUser } from '../reducers/loggedUserReducer'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
 

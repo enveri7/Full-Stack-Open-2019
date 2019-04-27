@@ -1,25 +1,23 @@
-// action creators
+import userService from '../services/users'
 
-export const setUser = (user) => {
-    return dispatch => {
+// Action creators
+
+export const initializeUsers = () => {
+    return async dispatch => {
+        const users = await userService.getAll()
         dispatch({
-            type: 'SET_USER',
-            data: user
+            type: 'INITIALIZE_USERS',
+            data: users
         })
     }
 }
 
 // reducer
 
-const initialState = null
-
-const reducer = (state = initialState, action) => {
-
+const reducer = (state = [], action) => {
     switch (action.type) {
-        case 'SET_USER':
+        case 'INITIALIZE_USERS':
             return action.data
-        case 'REMOVE_USER':
-            return initialState
         default: return state
     }
 }

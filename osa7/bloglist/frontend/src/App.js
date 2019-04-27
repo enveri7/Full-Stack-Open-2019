@@ -5,10 +5,12 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import AddBlog from './components/AddBlog'
 import Login from './components/Login'
+import Users from './components/Users'
 
 import Notification from './components/Notification'
 import { initializeBlogs } from './reducers/blogReducer'
-import {setUser} from './reducers/userReducer'
+import { initializeUsers } from './reducers/userReducer'
+import {setUser} from './reducers/loggedUserReducer'
 
 const App = (props) => {
 
@@ -21,6 +23,7 @@ const App = (props) => {
 
   useEffect(() => {
     props.initializeBlogs()
+    props.initializeUsers()
   }, [])
 
   useEffect(() => {
@@ -160,7 +163,7 @@ const App = (props) => {
   //     </div>
   //   )
 
-  if (!props.user) {
+  if (!props.loggedUser) {
     return (
       <Login />
     )
@@ -171,6 +174,7 @@ const App = (props) => {
       <Notification />
       <AddBlog />
       <BlogList />
+      <Users />
     </div>
   )
 }
@@ -178,12 +182,13 @@ const App = (props) => {
 // tän voi korvata ehkä routerilla
 const mapStateToProps = (state) => {
   return {
-    user: state.user
+    loggedUser: state.loggedUser
   }
 }
 
 const mapDispatchToProps = {
   initializeBlogs,
+  initializeUsers,
   setUser
 }
 
