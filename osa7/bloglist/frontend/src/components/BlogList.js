@@ -1,8 +1,8 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Blog from './Blog'
 
-const BlogList = ({blogs}) => {
+const BlogList = ({ blogs }) => {
     return (
         <>
             <h2>blogs</h2>
@@ -13,9 +13,9 @@ const BlogList = ({blogs}) => {
                     key={blog.id}
                     // updateBlog={updateBlog}
                     blog={blog}
-                    // getBlogList={getBlogList}
-                    // showMessage={showMessage}
-                    // user={user}
+                // getBlogList={getBlogList}
+                // showMessage={showMessage}
+                // user={user}
                 />
             )}
         </>

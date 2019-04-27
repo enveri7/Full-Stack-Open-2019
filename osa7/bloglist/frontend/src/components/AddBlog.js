@@ -1,32 +1,33 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import blogService from '../services/blogs'
 import { useField } from '../hooks/index'
+import { createBlog } from '../reducers/blogReducer'
+import { showNotification } from '../reducers/notificationReducer'
 import _ from 'lodash'
 
-const AddBlog = ({ addBlog, showMessage }) => {
-
-    const newBlogTitle = useField('title')
-    const newBlogAuthor = useField('author')
-    const newBlogUrl = useField('url')
+const AddBlog = (props) => {
 
     const handleCreate = async (e) => {
         e.preventDefault()
         try {
             const newBlogObject = {
-                title: newBlogTitle.value,
-                author: newBlogAuthor.value,
-                url: newBlogUrl.value
+                title: e.target.title.value,
+                author: e.target.author.value,
+                url: e.target.url.value
             }
-            const newBlog = await blogService.create(
+            console.log(newBlogObject)
+            props.createBlog(
                 newBlogObject
             )
-            addBlog(newBlog)
-            newBlogTitle.reset()
-            newBlogAuthor.reset()
-            newBlogUrl.reset()
-            showMessage(`uusi blogi ${newBlogTitle.value} luotu`, 'success')
+            // addBlog(newBlog)
+            // newBlogTitle.reset()
+            // newBlogAuthor.reset()
+            // newBlogUrl.reset()
+            props.showNotification(`uusi blogi ${e.target.title.value} luotu.`)
         } catch (exception) {
-            showMessage('blogia ei voitu luoda')
+            props.showNotification(`blogin luonnissa tapahtui virhe.`)
+
         }
     }
 
@@ -34,32 +35,23 @@ const AddBlog = ({ addBlog, showMessage }) => {
         <div>
             <h2>Create new</h2>
             <form onSubmit={handleCreate}>
-                <div>
-                    title
-            <input
-                        // with omit we remove reset function from object
-                        { ..._.omit(newBlogTitle, ['reset']) }
-                        name="title"
-                    />
-                </div>
-                <div>
-                    author
-            <input
-                        { ..._.omit(newBlogAuthor, ['reset']) }
-                        name="author"
-                    />
-                </div>
-                <div>
-                    url
-            <input
-                        { ..._.omit(newBlogUrl, ['reset']) }
-                        name="url"
-                    />
-                </div>
+                <div>Title: <input name="title" type="text" /></div>
+                <div>Author: <input name="author" type="text" /></div>
+                <div>URL: <input name="url" type="text" /></div>
                 <button type="submit">Create</button>
             </form>
         </div>
     )
 }
 
-export default AddBlog
+const mapStateToProps = (state) => {
+    return {
+    }
+    }
+
+    const mapDispatchToProps = {
+        createBlog,
+        showNotification
+    }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddBlog)

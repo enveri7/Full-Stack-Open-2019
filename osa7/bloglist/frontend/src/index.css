@@ -1,19 +1,7 @@
-  .error {
-    height: 30px;
-    margin: 4px;
-    padding-left: 8px;
-    background: #f07373;
-    border: 2px solid #f51f1f;
-    border-radius: 10px;
-    line-height: 30px;
-  }
-  
-  .success {
-    height: 30px;
-    margin: 4px;
-    padding-left: 8px;
-    background: #55dd60;
-    border: 2px solid #0abd0a;
+  .notification {
+    margin: 5px;
+    padding: 10px;
+    border: 2px solid black;
     border-radius: 10px;
     line-height: 30px;
   }

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import BlogList from './components/BlogList'
-import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import AddBlog from './components/AddBlog'
+import Login from './components/Login'
+
 import Notification from './components/Notification'
 import { initializeBlogs } from './reducers/blogReducer'
+import {setUser} from './reducers/userReducer'
 
 const App = (props) => {
 
@@ -19,6 +21,17 @@ const App = (props) => {
 
   useEffect(() => {
     props.initializeBlogs()
+  }, [])
+
+  useEffect(() => {
+    const userString = window.localStorage.getItem(
+      'loggedBlogUser'
+    )
+    if (userString) {
+      const u = JSON.parse(userString)
+      props.setUser(u)
+      blogService.setToken(u.token)
+    }
   }, [])
 
   // const handleLogin = async (event) => {
@@ -146,11 +159,32 @@ const App = (props) => {
   //       }
   //     </div>
   //   )
+
+  if (!props.user) {
+    return (
+      <Login />
+    )
+  }
+
   return (
     <div>
+      <Notification />
+      <AddBlog />
       <BlogList />
     </div>
   )
 }
 
-export default connect(null, { initializeBlogs })(App)
+// tän voi korvata ehkä routerilla
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatchToProps = {
+  initializeBlogs,
+  setUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
