@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import blogService from '../services/blogs'
+import {connect} from 'react-redux'
 
-const Blog = ({ updateBlog, user, showMessage, getBlogList, blog }) => {
+const Blog = ({ blog }) => {
   const [fullDetails, setFullDetails] = useState(false)
   const { title, author, url, likes } = blog
 
@@ -22,14 +23,14 @@ const Blog = ({ updateBlog, user, showMessage, getBlogList, blog }) => {
     const newObject = { ...blog }
     newObject.likes += 1
     newObject.user = blog.user.id
-    updateBlog(newObject, newObject.id)
+    // updateBlog(newObject, newObject.id)
   }
 
   const handleRemove = async () => {
     if (window.confirm(`Haluatko varmasti poistaa kohteen: ${blog.title}, ${blog.author}`)) {
       await blogService.remove(blog.id)
-      showMessage(`kohde ${blog.title}, ${blog.author} poistettu.`)
-      getBlogList()
+      // showMessage(`kohde ${blog.title}, ${blog.author} poistettu.`)
+      // getBlogList()
     }
   }
 
@@ -44,7 +45,7 @@ const Blog = ({ updateBlog, user, showMessage, getBlogList, blog }) => {
           <p>{likes} likes <button onClick={handleLikeClick}>like</button></p>
           <p>Added by {blog.user.name}</p>
 
-          {(user.username === blog.user.username) && <button onClick={handleRemove}>remove</button>}
+          {/* {(user.username === blog.user.username) && <button onClick={handleRemove}>remove</button>} */}
         </div>
       )
     }
@@ -64,13 +65,19 @@ const Blog = ({ updateBlog, user, showMessage, getBlogList, blog }) => {
   )
 }
 
-Blog.propTypes = {
-  user: PropTypes.object,
-  showMessage: PropTypes.func.isRequired,
-  getBlogList: PropTypes.func.isRequired,
-  updateBlog: PropTypes.func.isRequired,
-  blog: PropTypes.object.isRequired,
+// Blog.propTypes = {
+//   user: PropTypes.object,
+//   showMessage: PropTypes.func.isRequired,
+//   getBlogList: PropTypes.func.isRequired,
+//   updateBlog: PropTypes.func.isRequired,
+//   blog: PropTypes.object.isRequired,
+// }
+
+const mapStateToProps = (state) => {
+  return {
+    
+  }
 }
 
-export default Blog
+export default connect(mapStateToProps, null)(Blog)
 
