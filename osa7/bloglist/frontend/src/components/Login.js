@@ -5,6 +5,8 @@ import { setUser } from '../reducers/loggedUserReducer'
 import blogService from '../services/blogs'
 import loginService from '../services/login'
 
+import {withRouter} from 'react-router-dom'
+
 const LoginForm = (props) => {
 
     const handleLogin = async (e) => {
@@ -20,6 +22,7 @@ const LoginForm = (props) => {
                 'loggedBlogUser', JSON.stringify(user)
             )
             blogService.setToken(user.token)
+            props.history.push('/')
             // setUser(user)
             // setUsername('')
             // setPassword('')
@@ -51,4 +54,6 @@ const mapDispatchToProps = {
     setUser
 }
 
-export default connect(null, mapDispatchToProps)(LoginForm)
+const LoginFormWithHistory = withRouter(LoginForm)
+
+export default connect(null, mapDispatchToProps)(LoginFormWithHistory)
