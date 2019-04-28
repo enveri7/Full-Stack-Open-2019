@@ -1,4 +1,5 @@
 import blogService from '../services/blogs'
+import commentService from '../services/comments'
 
 // Action creators
 
@@ -22,6 +23,16 @@ export const like = (blogObject, id) => {
     }
   }
 
+  export const comment = (text, blogId) => {
+    return async dispatch => {
+      const newComment = await commentService.create(text, blogId)
+      dispatch({
+        type: 'NEW_COMMENT',
+        data: newComment
+      })
+    }
+  }
+
 export const initializeBlogs = () => {
     return async dispatch => {
         const blogs = await blogService.getAll()
@@ -36,6 +47,8 @@ export const initializeBlogs = () => {
 
 const reducer = (state = [], action) => {
     console.log(state, action)
+    const stateCopy = [...state]
+
     switch (action.type) {
         case 'INITIALIZE_BLOGS':
             return action.data
@@ -43,8 +56,13 @@ const reducer = (state = [], action) => {
             return [...state, action.data]
         case 'UPDATE_BLOG':
             const updatedBlog = action.data
-            const stateCopy = [...state]
             return stateCopy.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog)
+        case 'NEW_COMMENT':
+            const blogId = action.data.blog
+            const blogToUpdate = stateCopy.find(blog => blog.id === blogId)
+            blogToUpdate.comments.push({text: action.data.text, id: action.data.id})
+            console.log(blogToUpdate)
+            return stateCopy.map(blog => blog.id === blogToUpdate.id ? blogToUpdate : blog)
         default: return state
     }
 }
