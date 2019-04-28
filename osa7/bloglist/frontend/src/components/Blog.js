@@ -11,7 +11,7 @@ const Blog = (props) => {
     return null
   }
 
-  const { title, author, url, likes } = blog
+  const { title, author, url, likes, comments } = blog
 
   const handleVote = () => {
     const newObject = { ...blog }
@@ -33,7 +33,11 @@ const Blog = (props) => {
       <h2>{title}</h2>
       <a href={url}>{url}</a><br />
       {likes} likes <button onClick={handleVote}>like</button><br />
-      Added by {author}
+      Added by {author}<br />
+      <h3>Comments</h3>
+      <ul>
+        {comments.map(comment => <li>{comment}</li>)}
+      </ul>
     </div>
   )
 }
