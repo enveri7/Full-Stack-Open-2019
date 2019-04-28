@@ -17,6 +17,7 @@ const Blog = (props) => {
     const newObject = { ...blog }
     newObject.likes += 1
     newObject.user = blog.user.id
+    newObject.comments = blog.comments.map(comment => comment.id)
     props.like(newObject, newObject.id)
   }
 
@@ -28,6 +29,7 @@ const Blog = (props) => {
     }
   }
 
+  console.log(comments)
   return (
     <div>
       <h2>{title}</h2>
@@ -36,7 +38,7 @@ const Blog = (props) => {
       Added by {author}<br />
       <h3>Comments</h3>
       <ul>
-        {comments.map(comment => <li>{comment}</li>)}
+        {comments.map(comment => <li key={comment.id}>{comment.text}</li>)}
       </ul>
     </div>
   )

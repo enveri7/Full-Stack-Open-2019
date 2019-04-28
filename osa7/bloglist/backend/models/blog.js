@@ -20,9 +20,10 @@ const blogSchema = mongoose.Schema({
     },
     comments: [
         {
-            type: String
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'Comment'
         }
-    ]
+      ]
 })
 
 blogSchema.set('toJSON', {
