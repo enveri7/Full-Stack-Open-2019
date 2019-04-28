@@ -1,29 +1,23 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import blogService from '../services/blogs'
-import {connect} from 'react-redux'
+import {like} from '../reducers/blogReducer'
+import { connect } from 'react-redux'
 
-const Blog = ({ blog }) => {
-  const [fullDetails, setFullDetails] = useState(false)
+const Blog = (props) => {
+  const {blog} = props
+  
+  if (blog === undefined) {
+    return null
+  }
+
   const { title, author, url, likes } = blog
 
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
-
-  const handleDivClick = () => {
-    setFullDetails(!fullDetails)
-  }
-
-  const handleLikeClick = () => {
+  const handleVote = () => {
     const newObject = { ...blog }
     newObject.likes += 1
     newObject.user = blog.user.id
-    // updateBlog(newObject, newObject.id)
+    props.like(newObject, newObject.id)
   }
 
   const handleRemove = async () => {
@@ -34,33 +28,12 @@ const Blog = ({ blog }) => {
     }
   }
 
-  const showDetails = () => {
-    if (fullDetails) {
-      return (
-        <div>
-          <div onClick={handleDivClick}>
-            <p>{title}, {author} </p>
-          </div>
-          <p><a href={url}>{url}</a></p>
-          <p>{likes} likes <button onClick={handleLikeClick}>like</button></p>
-          <p>Added by {blog.user.name}</p>
-
-          {/* {(user.username === blog.user.username) && <button onClick={handleRemove}>remove</button>} */}
-        </div>
-      )
-    }
-    return (
-      <div onClick={handleDivClick}>
-        <p>{title}, {author} </p>
-      </div>
-    )
-  }
-
   return (
-    <div style={blogStyle}>
-      <div>
-        {showDetails()}
-      </div>
+    <div>
+      <h2>{title}</h2>
+      <a href={url}>{url}</a><br />
+      {likes} likes <button onClick={handleVote}>like</button><br />
+      Added by {author}
     </div>
   )
 }
@@ -75,9 +48,13 @@ const Blog = ({ blog }) => {
 
 const mapStateToProps = (state) => {
   return {
-    
+
   }
 }
 
-export default connect(mapStateToProps, null)(Blog)
+const mapDispatchToProps = {
+  like
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Blog)
 

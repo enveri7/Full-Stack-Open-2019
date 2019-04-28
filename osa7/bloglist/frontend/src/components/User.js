@@ -6,7 +6,7 @@ const User = ({ user }) => {
     if ( user === undefined) { 
         return null
       }
-
+    console.log(user.blogs)
     return (
             <div>
                 <h2>{user.name}</h2>

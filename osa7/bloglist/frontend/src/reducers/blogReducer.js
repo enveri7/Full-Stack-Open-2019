@@ -12,6 +12,16 @@ export const createBlog = (blogObject) => {
   }
 }
 
+export const like = (blogObject, id) => {
+    return async dispatch => {
+      const newBlog = await blogService.update(blogObject, id)
+      dispatch({
+        type: 'UPDATE_BLOG',
+        data: newBlog
+      })
+    }
+  }
+
 export const initializeBlogs = () => {
     return async dispatch => {
         const blogs = await blogService.getAll()
@@ -30,9 +40,11 @@ const reducer = (state = [], action) => {
         case 'INITIALIZE_BLOGS':
             return action.data
         case 'NEW_BLOG':
-            console.log("here")
-            console.log([...state, action.data])
             return [...state, action.data]
+        case 'UPDATE_BLOG':
+            const updatedBlog = action.data
+            const stateCopy = [...state]
+            return stateCopy.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog)
         default: return state
     }
 }

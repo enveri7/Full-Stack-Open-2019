@@ -7,6 +7,8 @@ import AddBlog from './components/AddBlog'
 import Login from './components/Login'
 import Users from './components/Users'
 import User from './components/User'
+import Blog from './components/Blog'
+
 import {
   BrowserRouter as Router,
   Route, Link, Redirect, withRouter
@@ -173,26 +175,32 @@ const App = (props) => {
     return props.users.find(user => user.id === (id))
   }
 
+  const blogById = (id) => {
+    return props.blogs.find(blogs => blogs.id === (id))
+  }
+
   if (!props.loggedUser) {
     return (
       <Login />
     )
   }
-    
-  console.log(userById("5cadf1f116150853a6399ddf"))
+
   return (
     <div>
       <Router>
         <Route exact path="/users" render={() => <Users />} />
+        <Route exact path="/blogs" render={() => <BlogList />} />
         <Route exact path="/users/:id" render={({ match }) =>
           <User user={userById(match.params.id)} />
+        } />
+        <Route exact path="/blogs/:id" render={({ match }) =>
+          <Blog blog={blogById(match.params.id)} />
         } />
       </Router>
       <Notification />
       <p>{props.loggedUser.username} logged in</p>
       <button onClick={logOut}>logout</button>
       <AddBlog />
-      <BlogList />
     </div>
   )
 }
@@ -201,7 +209,8 @@ const App = (props) => {
 const mapStateToProps = (state) => {
   return {
     loggedUser: state.loggedUser,
-    users: state.users
+    users: state.users,
+    blogs: state.blogs
   }
 }
 
