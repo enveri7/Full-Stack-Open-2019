@@ -6,7 +6,7 @@ import blogService from '../services/blogs'
 import loginService from '../services/login'
 
 import { withRouter } from 'react-router-dom'
-import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
+import { Button, Form, Grid, Header, Segment, Message } from 'semantic-ui-react'
 
 const LoginForm = (props) => {
 
@@ -46,12 +46,17 @@ const LoginForm = (props) => {
             </style>
             <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                 <Grid.Column style={{ maxWidth: 450 }}>
+                    <Message>
+                        <h4>Test user credentials</h4>
+                        <p>username: user</p>
+                        <p>password: lokki</p>
+                    </Message>
                     <Header as='h2' color='teal' textAlign='center'>
                         Log-in to your account
                 </Header>
                     <Form onSubmit={handleLogin} size='large'>
                         <Segment stacked>
-                            <Form.Input name="username" fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+                            <Form.Input name="username" fluid icon='user' iconPosition='left' placeholder='Username' />
                             <Form.Input
                                 fluid
                                 name="password"

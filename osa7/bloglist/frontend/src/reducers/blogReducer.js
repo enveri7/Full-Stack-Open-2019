@@ -5,6 +5,7 @@ import { dispatchNotification } from './notificationReducer'
 // Action creators
 
 export const createBlog = (blogObject) => {
+
   return async dispatch => {
     try {
       const newBlog = await blogService.create(blogObject)

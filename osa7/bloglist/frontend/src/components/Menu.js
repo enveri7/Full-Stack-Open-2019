@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Popup } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { setUser } from '../reducers/loggedUserReducer'
 import blogService from '../services/blogs'
@@ -22,6 +22,19 @@ const NavMenu = (props) => {
                 <Menu.Item as={Link} to="/">
                     Blogs
                 </Menu.Item>
+                {!user ?
+                    <Popup
+                        content='Login to create blogs'
+                        trigger={
+                            <Menu.Item disabled>
+                                Create a new blog
+                                    </Menu.Item>}
+                    />
+                    :
+                    <Menu.Item as={Link} to="/blogs/new">
+                        Create a new blog
+                             </Menu.Item>}
+
                 <Menu.Item as={Link} to="/users">
                     Users
                 </Menu.Item>

@@ -34,7 +34,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users
+        users: state.users,
+        blogs: state.blogs
     }
 }
 

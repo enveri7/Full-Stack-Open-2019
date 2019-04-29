@@ -68,8 +68,7 @@ const Blog = (props) => {
 Blog.propTypes = {
   like: PropTypes.func.isRequired,
   comment: PropTypes.func.isRequired,
-  blogs: PropTypes.array.isRequired,
-  blog: PropTypes.object.isRequired,
+  blogs: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => {

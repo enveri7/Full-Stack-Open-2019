@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import {
   BrowserRouter as Router,
-  Route
+  Route, Redirect
 } from 'react-router-dom'
 import BlogList from './components/BlogList'
 import blogService from './services/blogs'
@@ -53,7 +53,10 @@ const App = (props) => {
         <Notification />
         <Route exact path="/users" render={() => <Users />} />
         <Route exact path="/" render={() => <BlogList />} />
-        <Route exact path="/" render={() => <AddBlog />} />
+        <Route exact path="/blogs/new" render={() => props.loggedUser ? <AddBlog /> : <Redirect to="/login" />} />
+        {/* <Route path="/users" render={() =>
+  user ? <Users /> : <Redirect to="/login" />
+} /> */}
         <Route exact path="/login" render={() => <Login />} />
         <Route exact path="/users/:id" render={({ match }) =>
           <User user={userById(match.params.id)} />

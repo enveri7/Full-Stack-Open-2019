@@ -24,8 +24,8 @@ const AddBlog = (props) => {
     }
 
     return (
-        <div>
-            <h3>Create new</h3>
+        <>
+            <h3>Create a new blog</h3>
             <Form onSubmit={handleCreate}>
                 <Form.Field>
                     <label>Title</label>
@@ -42,7 +42,7 @@ const AddBlog = (props) => {
                 <Button type='submit'>Create</Button>
 
             </Form>
-        </div>
+        </>
     )
 }
 
