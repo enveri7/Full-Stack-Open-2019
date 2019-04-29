@@ -1,57 +1,54 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import blogService from '../services/blogs'
-import { useField } from '../hooks/index'
 import { createBlog } from '../reducers/blogReducer'
 import { showNotification } from '../reducers/notificationReducer'
-import _ from 'lodash'
+import { Form, Input, Button } from 'semantic-ui-react'
 
 const AddBlog = (props) => {
 
     const handleCreate = async (e) => {
         e.preventDefault()
-        try {
-            const newBlogObject = {
-                title: e.target.title.value,
-                author: e.target.author.value,
-                url: e.target.url.value
-            }
-            console.log(newBlogObject)
-            props.createBlog(
-                newBlogObject
-            )
-            // addBlog(newBlog)
-            // newBlogTitle.reset()
-            // newBlogAuthor.reset()
-            // newBlogUrl.reset()
-            props.showNotification(`uusi blogi ${e.target.title.value} luotu.`)
-        } catch (exception) {
-            props.showNotification(`blogin luonnissa tapahtui virhe.`)
-
+        const newBlogObject = {
+            title: e.target.title.value,
+            author: e.target.author.value,
+            url: e.target.url.value
         }
+
+        props.createBlog(
+            newBlogObject
+        )
+
+        e.target.title.value = ''
+        e.target.author.value = ''
+        e.target.url.value = ''
     }
 
     return (
         <div>
-            <h2>Create new</h2>
-            <form onSubmit={handleCreate}>
-                <div>Title: <input name="title" type="text" /></div>
-                <div>Author: <input name="author" type="text" /></div>
-                <div>URL: <input name="url" type="text" /></div>
-                <button type="submit">Create</button>
-            </form>
+            <h3>Create new</h3>
+            <Form onSubmit={handleCreate}>
+                <Form.Field>
+                    <label>Title</label>
+                    <Input type="text" name="title" />
+                </Form.Field>
+                <Form.Field>
+                    <label>Author</label>
+                    <Input type="text" name="author" />
+                </Form.Field>
+                <Form.Field>
+                    <label>URL</label>
+                    <Input type="text" name="url" />
+                </Form.Field>
+                <Button type='submit'>Create</Button>
+
+            </Form>
         </div>
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-    }
-    }
+const mapDispatchToProps = {
+    createBlog,
+    showNotification
+}
 
-    const mapDispatchToProps = {
-        createBlog,
-        showNotification
-    }
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddBlog)
+export default connect(null, mapDispatchToProps)(AddBlog)

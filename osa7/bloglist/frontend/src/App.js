@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
 import BlogList from './components/BlogList'
 import blogService from './services/blogs'
-import loginService from './services/login'
 import AddBlog from './components/AddBlog'
 import Login from './components/Login'
 import Users from './components/Users'
 import User from './components/User'
 import Blog from './components/Blog'
 import Menu from './components/Menu'
-
-
-import {
-  BrowserRouter as Router,
-  Route, Link, Redirect, withRouter
-} from 'react-router-dom'
-
 import Notification from './components/Notification'
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUsers } from './reducers/userReducer'
 import { setUser } from './reducers/loggedUserReducer'
+
+import {Container} from 'semantic-ui-react'
 
 const App = (props) => {
 
@@ -49,7 +47,7 @@ const App = (props) => {
   }
 
   return (
-    <div>
+    <Container>
       <Router>
         <Menu />
         <Notification />
@@ -64,11 +62,10 @@ const App = (props) => {
           <Blog blog={blogById(match.params.id)} />
         } />
       </Router>
-    </div>
+    </Container>
   )
 }
 
-// tän voi korvata ehkä routerilla
 const mapStateToProps = (state) => {
   return {
     loggedUser: state.loggedUser,

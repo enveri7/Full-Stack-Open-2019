@@ -14,10 +14,21 @@ export const showNotification = (message, time=3) => {
     }
 }
 
+export const dispatchNotification = (dispatch, message, time=3) => {
+        dispatch({
+            type: 'SHOW_NOTIFICATION',
+            data: message
+        })
+        setTimeout(() => {
+            dispatch({
+                type: 'REMOVE_NOTIFICATION',
+            })
+        }, time * 1000)
+}
+
 // reducer
 
 const reducer = (state = "", action) => {
-    console.log(state, action)
     switch (action.type) {
         case 'SHOW_NOTIFICATION':
             return action.data

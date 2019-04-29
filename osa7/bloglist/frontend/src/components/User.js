@@ -1,26 +1,29 @@
 import React from 'react'
+import { Table } from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 const User = ({ user }) => {
-    console.log(user)
 
-    if ( user === undefined) { 
+    if (user === undefined) {
         return null
-      }
-    console.log(user.blogs)
+    }
+
     return (
-            <div>
-                <h2>{user.name}</h2>
-                <h3>Added blogs</h3>
-                <ul>
+        <>
+            <h2>{user.name}</h2>
+            <h3>Added blogs</h3>
+            <Table striped>
+                <Table.Body>
                     {user.blogs.map(blog => {
                         return (
-                            <li key={blog.id}>
-                                {blog.title}
-                            </li>
+                            <Table.Row key={blog.id}>
+                                <Table.Cell><Link to={`/blogs/${blog.id}`}>{blog.title}</Link></Table.Cell>
+                            </Table.Row>
                         )
                     })}
-                </ul>
-            </div>
+                </Table.Body>
+            </Table>
+        </>
     )
 }
 
