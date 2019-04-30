@@ -1,21 +1,24 @@
 import blogService from '../services/blogs'
 import commentService from '../services/comments'
-import { dispatchNotification } from './notificationReducer'
+import { showNotification } from './notificationReducer'
+import { addBlogToUser } from './userReducer'
 
 // Action creators
 
 export const createBlog = (blogObject) => {
-
-  return async dispatch => {
+  return async (dispatch, getState) => {
     try {
       const newBlog = await blogService.create(blogObject)
       dispatch({
         type: 'NEW_BLOG',
         data: newBlog
       })
-      dispatchNotification(dispatch, `Uusi blogi '${newBlog.title}' luotu.`)
+      const username = getState().loggedUser.username
+      const blog = { title: newBlog.title, author: newBlog.author, id: newBlog.id, url: newBlog.url }
+      dispatch(addBlogToUser(username, blog))
+      dispatch(showNotification(`Uusi blogi '${newBlog.title}' luotu.`))
     } catch (e) {
-      dispatchNotification(dispatch, e.response.data.error)
+      dispatch(showNotification(e.response.data.error))
     }
   }
 }
