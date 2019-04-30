@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { showNotification } from '../reducers/notificationReducer'
-import { Form, Input, Button } from 'semantic-ui-react'
+import { Form, Input, Button, Popup, Icon } from 'semantic-ui-react'
 
 const AddBlog = (props) => {
 
@@ -25,25 +25,37 @@ const AddBlog = (props) => {
 
     return (
         <>
-            <h3>Create a new blog</h3>
+            <h3>
+                Create a new blog &nbsp;
+                {!props.user && <Popup
+                    trigger={<Icon name='info circle' />}
+                    content="You must be logged in to create blogs."
+                    basic
+                />}
+            </h3>
             <Form onSubmit={handleCreate}>
                 <Form.Field>
                     <label>Title</label>
-                    <Input type="text" name="title" />
+                    <Input disabled={props.user ? false : true} type="text" name="title" />
                 </Form.Field>
                 <Form.Field>
                     <label>Author</label>
-                    <Input type="text" name="author" />
+                    <Input disabled={props.user ? false : true} type="text" name="author" />
                 </Form.Field>
                 <Form.Field>
                     <label>URL</label>
-                    <Input type="text" name="url" />
+                    <Input disabled={props.user ? false : true} type="text" name="url" />
                 </Form.Field>
-                <Button type='submit'>Create</Button>
-
+                <Button disabled={props.user ? false : true} type='submit'>Create</Button>
             </Form>
         </>
     )
+}
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.loggedUser
+    }
 }
 
 const mapDispatchToProps = {
@@ -51,4 +63,4 @@ const mapDispatchToProps = {
     showNotification
 }
 
-export default connect(null, mapDispatchToProps)(AddBlog)
+export default connect(mapStateToProps, mapDispatchToProps)(AddBlog)
