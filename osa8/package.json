@@ -1,0 +1,16 @@
+{
+  "name": "osa8",
+  "version": "0.0.1",
+  "description": "graphql server practice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Teemu Roivas",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^2.6.4",
+    "graphql": "^14.3.1"
+  }
+}
