@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { gql } from 'apollo-boost'
 import { useQuery } from '@apollo/react-hooks';
 
+import EditAuthor from './EditAuthor'
+
 const Authors = (props) => {
 
   const ALL_AUTHORS = gql`
@@ -45,7 +47,7 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
-
+      <EditAuthor />
     </div>
   )
 }
